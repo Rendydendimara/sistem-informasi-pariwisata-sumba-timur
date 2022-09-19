@@ -2,9 +2,10 @@
   "version": 2,
   "name": "sistem-informasi-pariwisata-sumba-timur",
   "builds": [
-     { "src": "server.js", "use": "@vercel/node" }
+     { "src": "app.js", "use": "@vercel/node" }
   ],
   "routes": [
-     { "src": "/(.*)", "dest": "/server.js" }
-  ]
+     { "src": "/(.*)", "dest": "app.js" }
+  ],
+  "rewrites": [{ "source": "/api/(.*)", "destination": "app.js" }]
 }
