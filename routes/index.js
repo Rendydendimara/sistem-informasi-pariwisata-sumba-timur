@@ -19,9 +19,9 @@ router.get('/', appController.getHomePage);
 
 
 // middleware error status code 404
-router.use((req, res, next) => { res.status(404).render('404'); });
+// router.use((req, res, next) => { res.status(404).render('404'); });
 
 // middleware error status code 500 
-router.use((err, req, res, next) => { console.log(err); console.log('Error Status Code 500, msg.err => ', err); res.status(500).render('500'); });
+// router.use((err, req, res, next) => { console.log(err); console.log('Error Status Code 500, msg.err => ', err); res.status(500).render('500'); });
 
 module.exports = router;
