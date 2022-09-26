@@ -1,0 +1,108 @@
+<% layout('layouts/boilerplate-dashboard') -%>
+<div style="margin-top: 30px">
+  <h1 class="h2">Wisata</h1>
+  <div style="margin-top: 30px">
+    <form
+      action="/wisata/add"
+      method="post"
+      style="display: flex; flex-direction: column; gap: 20px"
+      enctype="multipart/form-data"
+    >
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          id="floatingInput"
+          placeholder="Nama Wisata"
+          required
+          name="namaWisata"
+        />
+        <label for="floatingInput">Nama Wisata</label>
+      </div>
+      <div>
+        <label for="formFileMultiple" class="form-label">Kategori Wisata</label>
+        <select
+          name="kategori"
+          class="form-select"
+          aria-label="Default select example"
+        >
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+      </div>
+      <div class="form-floating">
+        <textarea
+          style="height: 200px"
+          name="deskripsi"
+          class="form-control"
+          placeholder="Deskripsi tentang wisata"
+          id="floatingTextarea"
+        ></textarea>
+        <label for="floatingTextarea">Deskripsi Wisata</label>
+      </div>
+      <div class="mb-3">
+        <label for="formFileMultiple" class="form-label">Gambar Wisata</label>
+        <input
+          class="form-control"
+          name="images"
+          type="file"
+          id="formFileMultiple"
+          multiple
+          accept="image/*"
+        />
+      </div>
+      <div class="form-floating">
+        <textarea
+          style="height: 250px"
+          name="lokasiMap"
+          class="form-control"
+          placeholder="Deskripsi tentang wisata"
+          id="floatingTextarea"
+        ></textarea>
+        <label for="floatingTextarea">Lokasi Google Map</label>
+      </div>
+      <button class="btn btn-lg btn-primary" type="submit">
+        Tambah Wisata
+      </button>
+    </form>
+  </div>
+
+  <div class="mt-4" style="width: 100%; overflow-x: scroll">
+    <table id="tableData" class="display" style="width: 100%">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Nama Wisata</th>
+          <th>Deskripsi</th>
+          <th>Kategori</th>
+          <th>Lokasi Map</th>
+          <th>Gambar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%dataWisata.forEach((wisata, index) => { %>
+        <tr>
+          <td><%= index+1 %></td>
+          <td><%= wisata.nama_wisata %></td>
+          <td><%= wisata.deskripsi %></td>
+          <td><%= wisata.nama_kategori %></td>
+          <td><%= wisata.google_map %></td>
+          <td>
+            <div class="d-flex align-items-center">
+              <% for (var j = 0; j < wisata.image.length; j++) {%>
+              <img
+                class="mx-4"
+                src="<%=wisata.image[j]%>"
+                width="150"
+                height="150"
+              />
+              <% } %>
+            </div>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>

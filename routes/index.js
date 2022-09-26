@@ -1,21 +1,46 @@
 const express = require('express')
 const router = express.Router()
-const appController = require('../controller');
+const AppController = require('../controller');
+const AuthController = require('../controller/Auth');
+const DashboardController = require('../controller/Dashboard');
+const WisataController = require('../controller/Wisata');
+const HotelController = require('../controller/Hotel');
+const KategoriController = require('../controller/Kategori');
+const BukuTamuController = require('../controller/BukuTamu');
 const { forwardAuthenticated } = require('../config/auth');
+const { asyncErrorHandler } = require('../midleware/index');
 const { ensureAuthenticated } = require('../config/auth');
+const multer = require('multer');
+const { storage } = require('../cloudinary/index.cloudinary.js');
+const upload = multer({
+  storage,
+  limits: {
+    fileSize: 9010000 // 9.01mb 
+  }
+});
 
 // render root view
 // pasang middleware forwardAuthenticated agar user tidak login ulang ketika sudah memiliki session
-router.get('/', appController.getHomePage);
+router.get('/', AppController.getHomePage);
 
 // render login view
 // pasang middleware forwardAuthenticated agar user tidak login ulang ketika sudah memiliki session
-// router.get('/login', forwardAuthenticated, appController.renderLoginPage);
+// router.get('/login', forwardAuthenticated, AppController.renderLoginPage);
+router.get('/login', forwardAuthenticated, AuthController.renderLoginAdminPage);
+router.post('/login', AuthController.handleAdminLoginSubmit);
 
-// router.get('/dashboard', ensureAuthenticated, appController.handleDashboardAdmin);
+router.get('/dashboard', ensureAuthenticated, DashboardController.renderDashbordPage);
+router.get('/dashboard/wisata', ensureAuthenticated, WisataController.handleRenderDashboardWisata);
+router.post('/wisata/add', ensureAuthenticated, asyncErrorHandler(upload.array('images', 3)), WisataController.handleAddWisata);
+router.get('/dashboard/hotel', ensureAuthenticated, HotelController.handleRenderDashboardHotel);
+router.post('/hotel/add', ensureAuthenticated, asyncErrorHandler(upload.array('images', 3)), HotelController.handleAddHotel);
+router.get('/dashboard/kategori', ensureAuthenticated, KategoriController.handleRenderDashboardKategori);
+router.post('/kategori/add', ensureAuthenticated, KategoriController.handleAddKategori);
+router.get('/dashboard/buku-tamu', ensureAuthenticated, BukuTamuController.handleRenderDashboardBukuTamu);
+router.post('/buku-tamu/add', ensureAuthenticated, BukuTamuController.handleAddBukuTamu);
 // handle user-logout 
 // pasang midleware ensureAuthenticated agar user yang mengakses rute ini sudah memiliki session
-// router.get('/logout', ensureAuthenticated, appController.handleLogout);
+// router.get('/logout', ensureAuthenticated, AppController.handleLogout);
 
 
 // middleware error status code 404

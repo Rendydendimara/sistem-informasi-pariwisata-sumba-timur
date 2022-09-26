@@ -1,6 +1,9 @@
+const { APP_NAME } = require("../config");
+const passport = require('passport');
+
 const renderLoginAdminPage = (req, res, next) => {
   try {
-    res.render('login');
+    res.render('login', { userData: undefined, titlePage: `Login | ${APP_NAME}` });
   } catch (err) {
     console.log('err')
     next(err)
@@ -13,10 +16,9 @@ const handleAdminLoginSubmit = async (req, res, next) => {
       function (req, res) {
         res.redirect('/');
       };
-    // authentikasi login 
     passport.authenticate('local', {
-      successRedirect: '/', // jika berhasil login 
-      failureRedirect: '/login', // jika gagal login
+      successRedirect: '/',
+      failureRedirect: '/login',
       failureFlash: true
     })(req, res, next);
   } catch (err) {

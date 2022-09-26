@@ -1,0 +1,27 @@
+<% layout('layouts/boilerplate-dashboard') -%>
+<div style="margin-top: 30px">
+  <h1 class="h2">Buku Tamu</h1>
+
+  <div class="mt-4" style="width: 100%; overflow-x: scroll">
+    <table id="tableData" class="display" style="width: 100%">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>ID</th>
+          <th>Email</th>
+          <th>Tanggapan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%dataBukuTamu.forEach((bukuTamu, index) => { %>
+        <tr>
+          <td><%= index+1 %></td>
+          <td><%= bukuTamu.id %></td>
+          <td><%= kategori.email %></td>
+          <td><%= kategori.tanggapan %></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>

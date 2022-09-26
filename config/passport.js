@@ -4,42 +4,35 @@ const db = require('./db-config');
 
 module.exports = (passport) => {
 	passport.use(
-		new LocalStrategy({ usernameField: 'nomor_telpon' }, (nomor_telpon, password, done) => {
-			console.log(nomor_telpon);
-			console.log(password);
+		new LocalStrategy({ usernameField: 'username' }, (username, password, done) => {
+			console.log('username', username);
+			console.log('password', password);
 			// cari user di database
-			db.query('SELECT * FROM users WHERE nomor_telpon = ? LIMIT 1', [String(nomor_telpon)], (err, user) => {
+			db.query('SELECT * FROM admin WHERE username = ? LIMIT 1', [String(username)], (err, user) => {
 				console.log('user', user)
-
-				if (!user) {
+				const selectedUser = user[0]
+				if (!selectedUser) {
 					// Email akun belum terdaftar
 					// Kembalikan error
-					return done(null, false, { message: 'Password atau Nomor Telfon anda salah' });
+					return done(null, false, { message: 'Password atau Username Salah' });
 				}
 				else {
-					if (user.length === 0) {
-						console.log('Error => Nomor Telfon belum terdaftar');
-						// Email akun belum terdaftar
-						// Kembalikan error
-						return done(null, false, { message: 'Password atau Nomor Telfon anda salah' });
-					} else {
-						// Email akun user ada 
-						// Tinggal kita cocokan password
-						console.log('user[0].password', user[0].password)
-						bcrypt.compare(password, user[0].password, (err, isMatch) => {
-							if (err) throw err; // 500 status code
-							console.log('isMatch', isMatch)
-							if (isMatch) {
-								// password user benar
-								// kembalikan data milik user dan user memiliki session
-								return done(null, user[0]);
-							} else {
-								// password user salah
-								// kembalikan error
-								return done(null, false, { message: 'Password atau Nomor Telfon anda salah' });
-							}
-						});
-					}
+					// Email akun user ada 
+					// Tinggal kita cocokan password
+					console.log('user[0].password', selectedUser.password)
+					bcrypt.compare(password, selectedUser.password, (err, isMatch) => {
+						if (err) throw err; // 500 status code
+						console.log('isMatch', isMatch)
+						if (isMatch) {
+							// password user benar
+							// kembalikan data milik user dan user memiliki session
+							return done(null, selectedUser);
+						} else {
+							// password user salah
+							// kembalikan error
+							return done(null, false, { message: 'Password atau Username Salah' });
+						}
+					});
 				}
 			});
 		})
@@ -52,7 +45,7 @@ module.exports = (passport) => {
 
 	// deserializeUser
 	passport.deserializeUser((id, done) => {
-		db.query('SELECT * FROM users WHERE id = ? LIMIT 1', [Number(id)], (err, user) => {
+		db.query('SELECT * FROM admin WHERE id = ? LIMIT 1', [Number(id)], (err, user) => {
 			done(err, user[0]);
 		});
 	});

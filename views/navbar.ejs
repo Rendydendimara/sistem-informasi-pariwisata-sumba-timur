@@ -43,7 +43,7 @@
           style="display: flex; justify-content: space-between; width: 100%"
         >
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Beranda</a>
+            <a class="nav-link active" aria-current="page" href="/">Beranda</a>
           </li>
           <li class="nav-item dropdown">
             <a
@@ -83,9 +83,27 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Hubungi Kami</a>
           </li>
+          <% if( userData !== undefined ) {%>
           <li class="nav-item">
-            <a class="nav-link" href="#">Masuk</a>
+            <a class="nav-link" href="/dashboard">Dasboard</a>
           </li>
+          <% } %>
+          <div>
+            <li class="nav-item">
+              <% if( userData !== undefined ) {%>
+              <a class="p-1" href="/logout"
+                ><button class="btn btn-warning" type="submit">
+                  Logout
+                </button></a
+              >
+            </li>
+            <li class="nav-item"><% } else { %></li>
+            <li class="nav-item">
+              <a class="nav-link btn btn-danger" href="/login">Masuk</a>
+            </li>
+
+            <% } %>
+          </div>
         </ul>
       </div>
     </div>

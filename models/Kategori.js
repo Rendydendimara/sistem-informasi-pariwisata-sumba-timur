@@ -1,7 +1,7 @@
 const db = require('../config/db-config');
 
 const createTableKategori = () => new Promise((resolve, reject) => {
-  const sql = "CREATE TABLE IF NOT EXISTS kategori(id_kategori INT AUTO_INCREMENT PRIMARY KEY, nama_kategori VARCHAR(255) NOT NULL";
+  const sql = "CREATE TABLE IF NOT EXISTS kategori(id_kategori INT AUTO_INCREMENT PRIMARY KEY, nama_kategori VARCHAR(255) NOT NULL)";
   db.query(sql, (err, results) => {
     if (err) reject(err);
     else {

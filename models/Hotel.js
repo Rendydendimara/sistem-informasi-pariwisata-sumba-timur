@@ -1,7 +1,7 @@
 const db = require('../config/db-config');
 
 const createTableHotel = () => new Promise((resolve, reject) => {
-  const sql = "CREATE TABLE IF NOT EXISTS hotel(id_hotel INT AUTO_INCREMENT PRIMARY KEY, nama_hotel VARCHAR(255) NOT NULL, deskripsi TEXT NOT NULL, gambar VARCHAR(255) NOT NULL), google_map VARCHAR(255) NOT NULL";
+  const sql = "CREATE TABLE IF NOT EXISTS hotel(id_hotel INT AUTO_INCREMENT PRIMARY KEY, nama_hotel VARCHAR(255) NOT NULL, deskripsi TEXT NOT NULL, gambar VARCHAR(700) NOT NULL, google_map VARCHAR(500) NOT NULL)";
   db.query(sql, (err, results) => {
     if (err) reject(err);
     else {

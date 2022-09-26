@@ -1,4 +1,6 @@
+const { APP_NAME } = require("../config");
 const AdminModel = require("../models/Admin");
+
 
 module.exports = {
   //fungsi untuk merender home page
@@ -11,5 +13,5 @@ module.exports = {
     } catch (err) {
       next(err)
     }
-  }
+  },
 }

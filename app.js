@@ -15,8 +15,11 @@ app.use(cors());
 
 // DB config
 const db = require('./config/db-config');
-const { createTableBukuTamu, addBukuTamu, getAllBukuTamu } = require('./models/BukuTamu');
-
+const { createTableBukuTamu, } = require('./models/BukuTamu');
+const { createTableAdmin } = require('./models/Admin');
+const { createTableWisata } = require('./models/Wisata');
+const { createTableKategori } = require('./models/Kategori');
+const { createTableHotel } = require('./models/Hotel');
 // Passport config
 require('./config/passport')(passport);
 
@@ -79,18 +82,23 @@ app.use(morgan(function (tokens, req, res) {
   }
 }));
 
-// Routes
-app.use(require('./routes'));
-
 db.getConnection(async (err, result) => {
   if (err) {
+    // Routes
+    app.use(require('./routes'));
     console.log('Database tidak terkoneksi, aplikasi tidak dapat menggunakan database');
     console.log('err', err)
   } else {
+    // Routes
+    app.use(require('./routes'));
     console.log('Database terkoneksi, aplikasi dapat menggunakan');
     // Routes
     // try {
-    //   createTableBukuTamu()
+    createTableBukuTamu()
+    createTableAdmin()
+    createTableWisata()
+    createTableKategori()
+    createTableHotel()
     //   addBukuTamu('rendy@gmail.com', 'mantap')
     //   const data = await getAllBukuTamu()
     //   console.log('data', data)

@@ -1,0 +1,48 @@
+<% layout('layouts/boilerplate-dashboard') -%>
+<div style="margin-top: 30px">
+  <h1 class="h2">Kategori</h1>
+  <div style="margin-top: 30px">
+    <form
+      action="/kategori/add"
+      method="post"
+      style="display: flex; flex-direction: column; gap: 20px"
+      enctype="multipart/form-data"
+    >
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          id="floatingInput"
+          placeholder="Nama Kategori"
+          required
+          name="namaKategori"
+        />
+        <label for="floatingInput">Nama Kategori</label>
+      </div>
+      <button class="btn btn-lg btn-primary" type="submit">
+        Tambah Kategori
+      </button>
+    </form>
+  </div>
+
+  <div class="mt-4" style="width: 100%; overflow-x: scroll">
+    <table id="tableData" class="display" style="width: 100%">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>ID Kategori</th>
+          <th>Nama Kategori</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%dataKategori.forEach((kategori, index) => { %>
+        <tr>
+          <td><%= index+1 %></td>
+          <td><%= kategori.id_kategori %></td>
+          <td><%= kategori.nama_kategori %></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
