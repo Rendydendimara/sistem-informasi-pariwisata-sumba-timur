@@ -1,8 +1,10 @@
 const { APP_NAME } = require("../config");
 const WisataModel = require("../models/Wisata");
+const KategoriModel = require("../models/Kategori");
 
 const handleRenderDashboardWisata = async (req, res, next) => {
   try {
+    const dataKategori = await KategoriModel.getAllKategori()
     const dataWisata = await WisataModel.getAllWisata()
     const dataWisataFix = [];
     dataWisata.forEach(wisata => {
@@ -11,7 +13,7 @@ const handleRenderDashboardWisata = async (req, res, next) => {
         image: wisata.image.split(",").slice(1, wisata.image.split(",").length)
       })
     });
-    res.render('dashboard-wisata', { userData: undefined, titlePage: `Dashboard Wisata | ${APP_NAME}`, dataWisata: dataWisataFix });
+    res.render('dashboard-wisata', { userData: undefined, titlePage: `Dashboard Wisata | ${APP_NAME}`, dataWisata: dataWisataFix, dataKategori });
     return
   } catch (err) {
     next(err)
@@ -47,7 +49,37 @@ const handleAddWisata = async (req, res, next) => {
   }
 }
 
+const handleRenderListWisata = async (req, res, next) => {
+  try {
+    const page = Number(req.query.page) || 1;
+    const listWisata = await WisataModel.getListWisata({ page: page, limit: 5 })
+    const listWisataFix = []
+    listWisata.forEach(wisata => {
+      listWisataFix.push({
+        ...wisata,
+        deskripsi: wisata.deskripsi.slice(0, 128),
+        image: wisata.image.split(",").slice(1, wisata.image.split(",").length)
+      })
+    });
+    res.render('wisata', { userData: undefined, titlePage: `List Wisata | ${APP_NAME}`, listWisata: listWisataFix });
+  } catch (err) {
+    console.log('err')
+    next(err)
+  }
+}
+
+const handleRenderDetailWisata = async (req, res, next) => {
+  try {
+    res.render('wisata-detail', { userData: undefined, titlePage: `Detail Wisata | ${APP_NAME}` });
+  } catch (err) {
+    console.log('err')
+    next(err)
+  }
+}
+
 module.exports = {
   handleRenderDashboardWisata,
-  handleAddWisata
+  handleAddWisata,
+  handleRenderListWisata,
+  handleRenderDetailWisata
 };

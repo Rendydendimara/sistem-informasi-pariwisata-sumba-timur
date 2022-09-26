@@ -1,0 +1,83 @@
+<% layout('layouts/boilerplate') -%>
+<link rel="stylesheet" href="/photoswipe/dist/photoswipe.css" />
+<script
+  type="text/javascript"
+  src="/photoswipe/dist/photoswipe.esm.js"
+></script>
+<script
+  type="text/javascript"
+  src="/photoswipe/dist/photoswipe-lightbox.esm.js"
+></script>
+<script type="module">
+  import PhotoSwipeLightbox from '/photoswipe/dist/photoswipe-lightbox.esm.js';
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: '#gallery--getting-started',
+    children: 'a',
+    pswpModule: () => import('/photoswipe/dist/photoswipe.esm.js'),
+  });
+  lightbox.init();
+</script>
+<main style="min-height: 100vh" class="p-5">
+  <div class="row g-5">
+    <div class="col-md-8">
+      <article class="blog-post">
+        <h2 class="blog-post-title mb-1">Nama Wisata</h2>
+        <p class="blog-post-meta">Kategori</p>
+        <div class="d-flex align-items gap-2 my-5">
+          <%[0,1,2].forEach((wisata) => { %>
+          <div
+            class="pswp-gallery pswp-gallery--single-column"
+            id="gallery--getting-started"
+          >
+            <a
+              href="https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-2500.jpg"
+              data-pswp-width="1669"
+              data-pswp-height="2500"
+              target="_blank"
+            >
+              <img
+                src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-200.jpg"
+                alt=""
+              />
+            </a>
+          </div>
+          <% }) %>
+        </div>
+
+        <p>
+          This blog post shows a few different types of content that’s supported
+          and styled with Bootstrap. Basic typography, lists, tables, images,
+          code, and more are all supported as expected.
+        </p>
+        <hr />
+      </article>
+    </div>
+
+    <div class="col-md-4">
+      <div class="position-sticky" style="top: 2rem">
+        <div class="px-4">
+          <h4 class="border-bottom pb-4">Daftar Hotel Terdekat</h4>
+          <div>
+            <%[0,1].forEach((wisata) => { %>
+            <div class="card my-4" style="width: 18rem">
+              <img
+                src="https://via.placeholder.com/150x100"
+                class="card-img-top"
+                alt="hotel"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
+                </p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div>
+            <% }) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

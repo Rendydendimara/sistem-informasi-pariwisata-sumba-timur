@@ -22,7 +22,10 @@ const upload = multer({
 // render root view
 // pasang middleware forwardAuthenticated agar user tidak login ulang ketika sudah memiliki session
 router.get('/', AppController.getHomePage);
-
+router.get('/kontak', AppController.getKontakPage);
+router.get('/buku-tamu', BukuTamuController.handleRenderBukuTamuPage);
+router.get('/wisata', WisataController.handleRenderListWisata);
+router.get('/wisata/detail', WisataController.handleRenderDetailWisata);
 // render login view
 // pasang middleware forwardAuthenticated agar user tidak login ulang ketika sudah memiliki session
 // router.get('/login', forwardAuthenticated, AppController.renderLoginPage);

@@ -26,9 +26,11 @@
           class="form-select"
           aria-label="Default select example"
         >
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
+          <%dataKategori.forEach((kategori, index) => { %>
+          <option value="<%= kategori.id_kategori %>">
+            <%= kategori.nama_kategori %>
+          </option>
+          <% }) %>
         </select>
       </div>
       <div class="form-floating">

@@ -34,8 +34,19 @@ const getAllWisata = () =>
     });
   });
 
+
+const getListWisata = ({ page, limit }) =>
+  new Promise((resolve, reject) => {
+    const offset = (page - 1) * limit;
+    db.query(`SELECT id_wisata, nama_wisata, deskripsi, image, nama_kategori FROM wisata INNER JOIN kategori ON wisata.id_kategori = kategori.id_kategori LIMIT ${offset},${limit}`, (err, results) => {
+      if (err) reject(err);
+      else resolve(results);
+    });
+  });
+
 module.exports = {
   createTableWisata,
   addWisata,
-  getAllWisata
+  getAllWisata,
+  getListWisata
 }

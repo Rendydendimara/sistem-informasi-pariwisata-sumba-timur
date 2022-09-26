@@ -1,5 +1,17 @@
 const BukuTamuModel = require("../models/BukuTamu");
+const AdminModel = require("../models/Admin");
 const { APP_NAME } = require("../config");
+
+const handleRenderBukuTamuPage = async (req, res, next) => {
+  try {
+    const adminId = req.session.passport?.user ?? 0;
+    const userData = await AdminModel.getAdminById(adminId);
+    res.render('buku-tamu', { userData: userData ?? undefined, titlePage: `Buku Tamu | ${APP_NAME}` });
+    return
+  } catch (err) {
+    next(err)
+  }
+}
 
 const handleRenderDashboardBukuTamu = async (req, res, next) => {
   try {
@@ -17,7 +29,7 @@ const handleAddBukuTamu = async (req, res, next) => {
     await BukuTamuModel.addBukuTamu({
       email, tanggapan
     });
-    res.redirect('/dashboard/buku-tamu');
+    res.redirect('/buku-tamu');
   } catch (err) {
     console.log('err')
     next(err)
@@ -26,6 +38,7 @@ const handleAddBukuTamu = async (req, res, next) => {
 
 
 module.exports = {
+  handleRenderBukuTamuPage,
   handleRenderDashboardBukuTamu,
   handleAddBukuTamu
 };

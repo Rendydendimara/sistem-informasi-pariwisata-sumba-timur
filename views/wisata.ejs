@@ -1,0 +1,25 @@
+<% layout('layouts/boilerplate') -%>
+<main style="min-height: 100vh" class="p-5">
+  <h2 class="mb-4 border-bottom">Wisata</h2>
+  <div>
+    <%listWisata.forEach((wisata) => { %>
+    <div class="card mb-3 shadow" style="margin: 70px 0">
+      <img
+        src="<%= wisata.image[0] %>"
+        class="card-img-top"
+        alt="<%= wisata.nama_wisata %>"
+        height="400px"
+        style="object-fit: cover; object-position: center"
+      />
+      <div class="card-body">
+        <h5 class="card-title"><%= wisata.nama_wisata %></h5>
+        <p class="card-text"><%= wisata.deskripsi %></p>
+        <p class="card-text">
+          <small class="text-muted"><%= wisata.nama_kategori %></small>
+        </p>
+        <a href="/wisata/detail" class="btn btn-success">Lihat Detail</a>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+</main>

@@ -1,0 +1,42 @@
+<% layout('layouts/boilerplate') -%>
+<main style="min-height: 100vh">
+  <div
+    style="min-height: 100vh"
+    class="d-flex align-items-center justify-content-center flex-column"
+  >
+    <h2 class="mb-4 border-bottom">Buku Tamu</h2>
+    <form
+      action="/buku-tamu/add"
+      method="post"
+      style="display: flex; flex-direction: column; gap: 20px"
+    >
+      <div class="form-floating mb-3">
+        <input
+          name="email"
+          type="email"
+          class="form-control"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+          placeholder="Email"
+        />
+        <label for="exampleInputEmail1">Alamat Email</label>
+        <div id="emailHelp" class="form-text">
+          Kami tidak akan pernah membagikan email Anda kepada orang lain.
+        </div>
+      </div>
+      <div class="form-floating mb-3">
+        <textarea
+          style="height: 200px"
+          name="tanggapan"
+          class="form-control"
+          placeholder="Tanggapan"
+          id="floatingTextarea"
+        ></textarea>
+        <label for="floatingInput">Tanggapan</label>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width: 100%">
+        Kirim
+      </button>
+    </form>
+  </div>
+</main>
