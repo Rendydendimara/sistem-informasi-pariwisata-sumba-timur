@@ -45,7 +45,44 @@ const handleAddHotel = async (req, res, next) => {
   }
 }
 
+const handleRenderListHotel = async (req, res, next) => {
+  try {
+    const page = Number(req.query.page) || 1;
+    const listHotel = await HotelModel.getListHotel({ page: page, limit: 5 })
+    const listHotelFix = []
+    listHotel.forEach(hotel => {
+      listHotelFix.push({
+        ...hotel,
+        deskripsi: hotel.deskripsi.slice(0, 128),
+        gambar: hotel.gambar.split(",").slice(1, hotel.gambar.split(",").length)
+      })
+    });
+    res.render('hotel', { userData: undefined, titlePage: `List Hotel | ${APP_NAME}`, listHotel: listHotelFix });
+  } catch (err) {
+    console.log('err')
+    next(err)
+  }
+}
+
+const handleRenderDetailHotel = async (req, res, next) => {
+  try {
+    const idHotel = req.params.idHotel;
+    const hotel = await HotelModel.getHotelById(idHotel);
+    const fixHotel = {
+      ...hotel[0],
+      gambar: hotel[0].gambar.split(",").slice(1, hotel[0].gambar.split(",").length)
+    }
+    res.render('hotel-detail', { userData: undefined, titlePage: `Detail Hotel | ${APP_NAME}`, hotel: fixHotel });
+  } catch (err) {
+    console.log('err')
+    next(err)
+  }
+}
+
+
 module.exports = {
   handleRenderDashboardHotel,
-  handleAddHotel
+  handleAddHotel,
+  handleRenderListHotel,
+  handleRenderDetailHotel
 };

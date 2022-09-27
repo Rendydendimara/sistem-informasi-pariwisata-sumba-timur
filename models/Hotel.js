@@ -33,8 +33,28 @@ const getAllHotel = () =>
     });
   });
 
+const getListHotel = ({ page, limit }) =>
+  new Promise((resolve, reject) => {
+    const offset = (page - 1) * limit;
+    db.query(`SELECT id_hotel, nama_hotel, deskripsi, gambar FROM hotel LIMIT ${offset},${limit}`, (err, results) => {
+      if (err) reject(err);
+      else resolve(results);
+    });
+  });
+
+const getHotelById = (idHotel) =>
+  new Promise((resolve, reject) => {
+    db.query(`SELECT * FROM hotel WHERE id_hotel = ${idHotel}`, (err, results) => {
+      if (err) reject(err);
+      else resolve(results);
+    });
+  });
+
+
 module.exports = {
   createTableHotel,
   addHotel,
-  getAllHotel
+  getAllHotel,
+  getListHotel,
+  getHotelById
 }

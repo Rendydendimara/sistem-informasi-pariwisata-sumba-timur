@@ -25,7 +25,9 @@ router.get('/', AppController.getHomePage);
 router.get('/kontak', AppController.getKontakPage);
 router.get('/buku-tamu', BukuTamuController.handleRenderBukuTamuPage);
 router.get('/wisata', WisataController.handleRenderListWisata);
-router.get('/wisata/detail', WisataController.handleRenderDetailWisata);
+router.get('/wisata/detail/:idWisata', WisataController.handleRenderDetailWisata);
+router.get('/hotel', HotelController.handleRenderListHotel);
+router.get('/hotel/detail/:idHotel', HotelController.handleRenderDetailHotel);
 // render login view
 // pasang middleware forwardAuthenticated agar user tidak login ulang ketika sudah memiliki session
 // router.get('/login', forwardAuthenticated, AppController.renderLoginPage);
@@ -47,9 +49,9 @@ router.post('/buku-tamu/add', ensureAuthenticated, BukuTamuController.handleAddB
 
 
 // middleware error status code 404
-// router.use((req, res, next) => { res.status(404).render('404'); });
+router.use((req, res, next) => { res.status(404).render('404'); });
 
 // middleware error status code 500 
-// router.use((err, req, res, next) => { console.log(err); console.log('Error Status Code 500, msg.err => ', err); res.status(500).render('500'); });
+router.use((err, req, res, next) => { console.log(err); console.log('Error Status Code 500, msg.err => ', err); res.status(500).render('500'); });
 
 module.exports = router;

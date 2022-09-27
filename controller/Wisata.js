@@ -70,7 +70,13 @@ const handleRenderListWisata = async (req, res, next) => {
 
 const handleRenderDetailWisata = async (req, res, next) => {
   try {
-    res.render('wisata-detail', { userData: undefined, titlePage: `Detail Wisata | ${APP_NAME}` });
+    const idWisata = req.params.idWisata;
+    const wisata = await WisataModel.getWisataById(idWisata);
+    const fixWisata = {
+      ...wisata[0],
+      image: wisata[0].image.split(",").slice(1, wisata[0].image.split(",").length)
+    }
+    res.render('wisata-detail', { userData: undefined, titlePage: `Detail Wisata | ${APP_NAME}`, wisata: fixWisata });
   } catch (err) {
     console.log('err')
     next(err)

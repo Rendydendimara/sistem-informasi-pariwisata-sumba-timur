@@ -44,9 +44,19 @@ const getListWisata = ({ page, limit }) =>
     });
   });
 
+const getWisataById = (idWisata) =>
+  new Promise((resolve, reject) => {
+    db.query(`SELECT * FROM wisata INNER JOIN kategori ON wisata.id_kategori = kategori.id_kategori WHERE id_wisata = ${idWisata}`, (err, results) => {
+      if (err) reject(err);
+      else resolve(results);
+    });
+  });
+
+
 module.exports = {
   createTableWisata,
   addWisata,
   getAllWisata,
-  getListWisata
+  getListWisata,
+  getWisataById
 }
