@@ -1,0 +1,70 @@
+<% layout('layouts/boilerplate-dashboard') -%>
+<div style="margin-top: 30px">
+  <a class="mb-3" href="/dashboard/hotel">
+    <button type="button" class="btn btn-primary mb-3">Kembali</button>
+  </a>
+
+  <h4 class="h4">Ubah Data Hotel</h4>
+  <div style="margin-top: 30px">
+    <form
+      action="/hotel/update"
+      method="post"
+      style="display: flex; flex-direction: column; gap: 20px"
+      enctype="multipart/form-data"
+    >
+      <input type="text" name="oldImage" value="<%= hotel.gambar%>" hidden />
+      <input type="text" name="id_hotel" value="<%= hotel.id_hotel%>" hidden />
+
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          id="floatingInput"
+          placeholder="Nama Hotel"
+          required
+          name="namaHotel"
+          value="<%= hotel.nama_hotel %>"
+        />
+        <label for="floatingInput">Nama Hotal</label>
+      </div>
+      <div class="mb-3">
+        <label for="formFileMultiple" class="form-label">Gambar Hotel</label>
+        <input
+          class="form-control"
+          name="images"
+          type="file"
+          id="formFileMultiple"
+          multiple
+          accept="image/*"
+        />
+      </div>
+      <div class="d-flex gap-2 align-items-flex-start">
+        <div class="form-floating" style="width: 100%">
+          <textarea
+            style="height: 200px"
+            name="deskripsi"
+            class="form-control"
+            placeholder="Deskripsi tentang hotel"
+            id="floatingTextarea"
+          >
+  <%= hotel.deskripsi %></textarea
+          >
+          <label for="floatingTextarea">Deskripsi Hotel</label>
+        </div>
+        <div class="form-floating" style="width: 100%">
+          <textarea
+            style="height: 100px"
+            name="lokasiMap"
+            class="form-control"
+            placeholder="Deskripsi tentang hotel"
+            id="floatingTextarea"
+          >
+  <%= hotel.google_map %></textarea
+          >
+          <label for="floatingTextarea">Lokasi Google Map</label>
+        </div>
+      </div>
+      <button class="btn btn-lg btn-primary" type="submit">Ubah Hotel</button>
+    </form>
+  </div>
+</div>

@@ -6,7 +6,7 @@ const handleRenderBukuTamuPage = async (req, res, next) => {
   try {
     const adminId = req.session.passport?.user ?? 0;
     const userData = await AdminModel.getAdminById(adminId);
-    res.render('buku-tamu', { userData: userData ?? undefined, titlePage: `Buku Tamu | ${APP_NAME}` });
+    res.render('buku-tamu', { userData: userData ? userData : undefined, titlePage: `Buku Tamu | ${APP_NAME}` });
     return
   } catch (err) {
     next(err)
@@ -15,8 +15,9 @@ const handleRenderBukuTamuPage = async (req, res, next) => {
 
 const handleRenderDashboardBukuTamu = async (req, res, next) => {
   try {
+    const adminId = req.session.passport?.user ?? 0;
     const dataBukuTamu = await BukuTamuModel.getAllBukuTamu()
-    res.render('dashboard-buku-tamu', { userData: undefined, titlePage: `Dashboard Buku Tamu | ${APP_NAME}`, dataBukuTamu });
+    res.render('dashboard-buku-tamu', { userData: adminId, titlePage: `Dashboard Buku Tamu | ${APP_NAME}`, dataBukuTamu });
     return
   } catch (err) {
     next(err)

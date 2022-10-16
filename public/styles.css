@@ -3,3 +3,7 @@
   height: 100%;
   object-fit: cover;
 }
+
+.nav-dashboard-admin:hover {
+  background-color: aqua !important;
+}

@@ -58,7 +58,18 @@
           </div>
         </div>
         <div><%= wisata.deskripsi %></div>
-        <hr />
+        <br />
+        <br />
+        <h5>Lokasi:</h5>
+        <iframe
+          src="<%= wisata.google_map %>"
+          width="700"
+          height="450"
+          style="border: 0"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
       </article>
     </div>
 
@@ -67,19 +78,22 @@
         <div class="px-4">
           <h4 class="border-bottom pb-4">Daftar Hotel Terdekat</h4>
           <div>
-            <%[0,1].forEach((wisata) => { %>
+            <%dataHotel.forEach((hotel) => { %>
             <div class="card my-4" style="width: 18rem">
               <img
-                src="https://via.placeholder.com/150x100"
+                src="<%= hotel.gambar %>"
                 class="card-img-top"
                 alt="hotel"
+                width="full"
+                height="200px"
+                style="object-fit: cover; object-position: center"
               />
               <div class="card-body">
-                <h5 class="card-title">Nama Hotel</h5>
-                <p class="card-text">Deskripsi Hotel</p>
+                <h5 class="card-title"><%= hotel.nama_hotel %></h5>
+                <p class="card-text"><%= hotel.deskripsi %></p>
                 <a
                   style="width: 100%; background-color: #bfe3b4"
-                  href="#"
+                  href="/hotel/detail/<%= hotel.id_hotel %>"
                   class="btn text-bold fw-bold"
                   >Detail</a
                 >

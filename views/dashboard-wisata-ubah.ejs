@@ -1,0 +1,91 @@
+<% layout('layouts/boilerplate-dashboard') -%>
+<div style="margin-top: 30px">
+  <div style="margin-top: 30px">
+    <a class="mb-3" href="/dashboard/wisata">
+      <button type="button" class="btn btn-primary mb-3">Kembali</button>
+    </a>
+    <h4 class="h4">Ubah Data Wisata</h4>
+    <form
+      action="/wisata/update"
+      method="post"
+      style="display: flex; flex-direction: column; gap: 20px"
+      enctype="multipart/form-data"
+    >
+      <input type="text" name="oldImage" value="<%= wisata.image%>" hidden />
+      <input
+        type="text"
+        name="id_wisata"
+        value="<%= wisata.id_wisata%>"
+        hidden
+      />
+
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          id="floatingInput"
+          placeholder="Nama Wisata"
+          required
+          name="namaWisata"
+          value="<%= wisata.nama_wisata%>"
+        />
+        <label for="floatingInput">Nama Wisata</label>
+      </div>
+      <div>
+        <label for="formFileMultiple" class="form-label">Kategori Wisata</label>
+        <select
+          name="kategori"
+          class="form-select"
+          aria-label="Default select example"
+          value="<%= wisata.id_kategori%>"
+        >
+          <%dataKategori.forEach((kategori, index) => { %>
+          <option value="<%= kategori.id_kategori %>">
+            <%= kategori.nama_kategori %>
+          </option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="formFileMultiple" class="form-label">Gambar Wisata</label>
+        <input
+          class="form-control"
+          name="images"
+          type="file"
+          id="formFileMultiple"
+          multiple
+          accept="image/*"
+        />
+      </div>
+      <div class="d-flex gap-2 align-items-flex-start">
+        <div class="form-floating" style="width: 100%">
+          <textarea
+            style="height: 200px"
+            name="deskripsi"
+            class="form-control"
+            placeholder="Deskripsi tentang wisata"
+            id="floatingTextarea"
+            value="<%= wisata.deskripsi%>"
+          >
+  <%= wisata.deskripsi%></textarea
+          >
+          <label for="floatingTextarea">Deskripsi Wisata</label>
+        </div>
+        <div class="form-floating" style="width: 100%">
+          <textarea
+            style="height: 100px"
+            name="lokasiMap"
+            class="form-control"
+            placeholder="Deskripsi tentang wisata"
+            id="floatingTextarea"
+          >
+  <%= wisata.google_map%></textarea
+          >
+          <label for="floatingTextarea">Lokasi Google Map</label>
+        </div>
+      </div>
+
+      <button class="btn btn-lg btn-primary" type="submit">Ubah Wisata</button>
+    </form>
+  </div>
+</div>

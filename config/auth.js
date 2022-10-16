@@ -2,8 +2,8 @@ module.exports = {
 	// fungsi untuk melihat apakah user sudah memiliki session atau belum
 	// fungsi ini untuk melindingu rute yang membutuhkan akses session
 	ensureAuthenticated: (req, res, next) => {
-		// if(req.isAuthenticated()) {
-		if (true) {
+		if (req.isAuthenticated()) {
+			// if (true) {
 			// user memliki session
 			// user berhak mengakses endpoint routes
 			return next();

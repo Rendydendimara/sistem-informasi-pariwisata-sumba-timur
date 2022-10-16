@@ -52,11 +52,57 @@ const getWisataById = (idWisata) =>
     });
   });
 
+const getWisataByKategori = (idKategori) =>
+  new Promise((resolve, reject) => {
+    db.query(`SELECT * FROM wisata INNER JOIN kategori ON wisata.id_kategori = kategori.id_kategori WHERE wisata.id_kategori = ${idKategori}`, (err, results) => {
+      if (err) reject(err);
+      else resolve(results);
+    });
+  });
+
+
+const searchWisataByQuery = (search) =>
+  new Promise((resolve, reject) => {
+    db.query(`SELECT * FROM wisata WHERE nama_wisata LIKE '%${search}%'`, (err, results) => {
+      if (err) reject(err);
+      else resolve(results);
+    });
+  });
+
+
+const deleteWisataById = (id) =>
+  new Promise((resolve, reject) => {
+    db.query(`DELETE FROM wisata WHERE id_wisata = ${id}`, (err, results) => {
+      if (err) reject(err);
+      else resolve(results);
+    });
+  });
+
+
+const updateWisata = ({ id, idKategori, namaWisata, deskripsi, image, googleMap }) => new Promise((resolve, reject) => {
+  const data = [
+    idKategori,
+    namaWisata,
+    deskripsi,
+    image,
+    googleMap,
+    id
+  ]
+  const sql = `UPDATE wisata SET id_kategori = ?, nama_wisata = ?, deskripsi = ?, image = ?, google_map = ? WHERE id_wisata = ?`;
+  db.query(sql, data, (err, results) => {
+    if (err) reject(err);
+    else resolve(results);
+  });
+})
 
 module.exports = {
   createTableWisata,
   addWisata,
   getAllWisata,
   getListWisata,
-  getWisataById
+  getWisataById,
+  searchWisataByQuery,
+  getWisataByKategori,
+  deleteWisataById,
+  updateWisata
 }

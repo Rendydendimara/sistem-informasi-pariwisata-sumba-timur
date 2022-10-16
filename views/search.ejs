@@ -1,0 +1,45 @@
+<% layout('layouts/boilerplate') -%>
+<main style="min-height: 100vh" class="p-5">
+  <h2 class="mb-4 border-bottom">Search</h2>
+  <h4>"<%= search %>"</h4>
+  <div>
+    <%dataWisata.forEach((wisata) => { %>
+    <div class="card mb-3 shadow" style="margin: 70px 0">
+      <img
+        src="<%= wisata.image[0] %>"
+        class="card-img-top"
+        alt="<%= wisata.nama_wisata %>"
+        height="400px"
+        style="object-fit: cover; object-position: center"
+      />
+      <div class="card-body">
+        <h5 class="card-title"><%= wisata.nama_wisata %></h5>
+        <p class="card-text"><%= wisata.deskripsi %></p>
+        <p class="card-text">
+          <small class="text-muted"><%= wisata.nama_kategori %></small>
+        </p>
+        <a href="/wisata/detail/<%= wisata.id_wisata %>" class="btn btn-success"
+          >Lihat Detail</a
+        >
+      </div>
+    </div>
+    <% }) %> <%dataHotel.forEach((hotel) => { %>
+    <div class="card mb-3 shadow" style="margin: 70px 0">
+      <img
+        src="<%= hotel.gambar[0] %>"
+        class="card-img-top"
+        alt="<%= hotel.nama_wisata %>"
+        height="400px"
+        style="object-fit: cover; object-position: center"
+      />
+      <div class="card-body">
+        <h5 class="card-title"><%= hotel.nama_hotel %></h5>
+        <p class="card-text"><%= hotel.deskripsi %></p>
+        <a href="/hotel/detail/<%= hotel.id_hotel %>" class="btn btn-success"
+          >Lihat Detail</a
+        >
+      </div>
+    </div>
+    <% }) %>
+  </div>
+</main>

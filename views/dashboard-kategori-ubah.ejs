@@ -1,0 +1,37 @@
+<% layout('layouts/boilerplate-dashboard') -%>
+<div style="margin-top: 30px">
+  <div style="margin-top: 30px">
+    <a class="mb-3" href="/dashboard/kategori">
+      <button type="button" class="btn btn-primary mb-3">Kembali</button>
+    </a>
+    <h4 class="h4">Ubah Data Kategori</h4>
+    <form
+      action="/kategori/update"
+      method="post"
+      style="display: flex; flex-direction: column; gap: 20px"
+      enctype="multipart/form-data"
+    >
+      <input
+        type="text"
+        name="id_kategori"
+        value="<%= kategori.id_kategori%>"
+        hidden
+      />
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          id="floatingInput"
+          placeholder="Nama Kategori"
+          required
+          name="namaKategori"
+          value="<%= kategori.nama_kategori%>"
+        />
+        <label for="floatingInput">Nama Wisata</label>
+      </div>
+      <button class="btn btn-lg btn-primary" type="submit">
+        Ubah Kategori
+      </button>
+    </form>
+  </div>
+</div>

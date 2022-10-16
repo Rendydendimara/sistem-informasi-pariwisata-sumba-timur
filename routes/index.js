@@ -22,12 +22,14 @@ const upload = multer({
 // render root view
 // pasang middleware forwardAuthenticated agar user tidak login ulang ketika sudah memiliki session
 router.get('/', AppController.getHomePage);
+router.post('/search', AppController.search);
 router.get('/kontak', AppController.getKontakPage);
 router.get('/buku-tamu', BukuTamuController.handleRenderBukuTamuPage);
 router.get('/wisata', WisataController.handleRenderListWisata);
 router.get('/wisata/detail/:idWisata', WisataController.handleRenderDetailWisata);
 router.get('/hotel', HotelController.handleRenderListHotel);
 router.get('/hotel/detail/:idHotel', HotelController.handleRenderDetailHotel);
+router.get('/kategori', WisataController.handleFindWisataByKategori);
 // render login view
 // pasang middleware forwardAuthenticated agar user tidak login ulang ketika sudah memiliki session
 // router.get('/login', forwardAuthenticated, AppController.renderLoginPage);
@@ -37,6 +39,15 @@ router.post('/login', AuthController.handleAdminLoginSubmit);
 router.get('/dashboard', ensureAuthenticated, DashboardController.renderDashbordPage);
 router.get('/dashboard/wisata', ensureAuthenticated, WisataController.handleRenderDashboardWisata);
 router.post('/wisata/add', ensureAuthenticated, asyncErrorHandler(upload.array('images', 3)), WisataController.handleAddWisata);
+router.get('/dashboard/wisata/delete/:idWisata', ensureAuthenticated, WisataController.handleDeleteWisata);
+router.get('/dashboard/wisata/update/:idWisata', ensureAuthenticated, WisataController.handleRenderUpdateDetailWisata);
+router.post('/wisata/update', ensureAuthenticated, asyncErrorHandler(upload.array('images', 3)), WisataController.handleUpdateWisata);
+router.get('/dashboard/hotel/delete/:idHotel', ensureAuthenticated, HotelController.handleDeleteHotel);
+router.get('/dashboard/hotel/update/:idHotel', ensureAuthenticated, HotelController.handleRenderUpdateHotel);
+router.post('/hotel/update', ensureAuthenticated, asyncErrorHandler(upload.array('images', 3)), HotelController.handleUpdateHotel);
+router.get('/dashboard/kategori/delete/:idKategori', ensureAuthenticated, KategoriController.handleDeleteKategori);
+router.get('/dashboard/kategori/update/:idKategori', ensureAuthenticated, KategoriController.handleRenderUpdateHotel);
+router.post('/kategori/update', ensureAuthenticated, asyncErrorHandler(upload.array('images', 3)), KategoriController.handleUpdateKategori);
 router.get('/dashboard/hotel', ensureAuthenticated, HotelController.handleRenderDashboardHotel);
 router.post('/hotel/add', ensureAuthenticated, asyncErrorHandler(upload.array('images', 3)), HotelController.handleAddHotel);
 router.get('/dashboard/kategori', ensureAuthenticated, KategoriController.handleRenderDashboardKategori);
@@ -45,7 +56,7 @@ router.get('/dashboard/buku-tamu', ensureAuthenticated, BukuTamuController.handl
 router.post('/buku-tamu/add', ensureAuthenticated, BukuTamuController.handleAddBukuTamu);
 // handle user-logout 
 // pasang midleware ensureAuthenticated agar user yang mengakses rute ini sudah memiliki session
-// router.get('/logout', ensureAuthenticated, AppController.handleLogout);
+router.get('/logout', ensureAuthenticated, AuthController.handleAdminLogout);
 
 
 // middleware error status code 404

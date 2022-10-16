@@ -50,11 +50,45 @@ const getHotelById = (idHotel) =>
     });
   });
 
+const searchHotelByQuery = (search) =>
+  new Promise((resolve, reject) => {
+    db.query(`SELECT * FROM hotel WHERE nama_hotel LIKE '%${search}%'`, (err, results) => {
+      if (err) reject(err);
+      else resolve(results);
+    });
+  });
+
+const deleteHotelById = (idHotel) =>
+  new Promise((resolve, reject) => {
+    db.query(`DELETE FROM hotel WHERE id_hotel = ${idHotel}`, (err, results) => {
+      if (err) reject(err);
+      else resolve(results);
+    });
+  });
+
+
+const updateHotel = ({ hotelId, namaHotel, deskripsi, gambar, googleMap }) => new Promise((resolve, reject) => {
+  const data = [
+    namaHotel,
+    deskripsi,
+    gambar,
+    googleMap,
+    hotelId
+  ]
+  const sql = `UPDATE hotel SET nama_hotel = ?, deskripsi = ?, gambar = ?, google_map = ? WHERE id_hotel = ?`;
+  db.query(sql, data, (err, results) => {
+    if (err) reject(err);
+    else resolve(results);
+  });
+})
 
 module.exports = {
   createTableHotel,
   addHotel,
   getAllHotel,
   getListHotel,
-  getHotelById
+  getHotelById,
+  searchHotelByQuery,
+  deleteHotelById,
+  updateHotel
 }

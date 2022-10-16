@@ -1,12 +1,91 @@
 <% layout('layouts/boilerplate-dashboard') -%>
 <div style="margin-top: 30px">
   <h1 class="h2">Kategori</h1>
+  <div class="mt-4" style="width: 100%; overflow-x: scroll">
+    <h4 class="h4">List Data Kategori</h4>
+    <table id="tableData" class="display" style="width: 100%">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Aksi</th>
+          <th>ID Kategori</th>
+          <th>Nama Wisata</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%dataKategori.forEach((kategori, index) => { %>
+        <tr>
+          <td><%= index+1 %></td>
+          <td>
+            <dix class="d-flex align-items-center gap-2">
+              <a href="/dashboard/kategori/update/<%= kategori.id_kategori %>">
+                <button type="button" class="btn btn-warning">Ubah</button>
+              </a>
+              <button
+                data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop<%= kategori.id_kategori %>"
+                type="button"
+                class="btn btn-danger"
+              >
+                Hapus
+              </button>
+            </dix>
+          </td>
+          <td><%= kategori.id_kategori %></td>
+          <td><%= kategori.nama_kategori %></td>
+        </tr>
+        <div
+          class="modal fade"
+          id="staticBackdrop<%= kategori.id_kategori %>"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabindex="-1"
+          aria-labelledby="staticBackdropLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                  Hapus Wisata
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <h6>Apakah anda yakin ingin menghapus data kategori ?</h6>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-success"
+                  data-bs-dismiss="modal"
+                >
+                  Batal
+                </button>
+                <a
+                  href="/dashboard/kategori/delete/<%= kategori.id_kategori %>"
+                >
+                  <button type="button" class="btn btn-danger">Hapus</button>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
   <div style="margin-top: 30px">
+    <h4 class="h4">Tambah Data Kategori</h4>
     <form
       action="/kategori/add"
       method="post"
       style="display: flex; flex-direction: column; gap: 20px"
-      enctype="multipart/form-data"
     >
       <div class="form-floating">
         <input
@@ -17,32 +96,11 @@
           required
           name="namaKategori"
         />
-        <label for="floatingInput">Nama Kategori</label>
+        <label for="floatingInput">Nama Wisata</label>
       </div>
       <button class="btn btn-lg btn-primary" type="submit">
         Tambah Kategori
       </button>
     </form>
-  </div>
-
-  <div class="mt-4" style="width: 100%; overflow-x: scroll">
-    <table id="tableData" class="display" style="width: 100%">
-      <thead>
-        <tr>
-          <th>No</th>
-          <th>ID Kategori</th>
-          <th>Nama Kategori</th>
-        </tr>
-      </thead>
-      <tbody>
-        <%dataKategori.forEach((kategori, index) => { %>
-        <tr>
-          <td><%= index+1 %></td>
-          <td><%= kategori.id_kategori %></td>
-          <td><%= kategori.nama_kategori %></td>
-        </tr>
-        <% }) %>
-      </tbody>
-    </table>
   </div>
 </div>

@@ -16,10 +16,10 @@ app.use(cors());
 // DB config
 const db = require('./config/db-config');
 const { createTableBukuTamu, } = require('./models/BukuTamu');
-const { createTableAdmin } = require('./models/Admin');
+const { createTableAdmin, addAdmin } = require('./models/Admin');
 const { createTableWisata } = require('./models/Wisata');
 const { createTableKategori } = require('./models/Kategori');
-const { createTableHotel } = require('./models/Hotel');
+const { createTableHotel, updateHotel, deleteHotelById } = require('./models/Hotel');
 // Passport config
 require('./config/passport')(passport);
 
@@ -92,13 +92,25 @@ db.getConnection(async (err, result) => {
     // Routes
     app.use(require('./routes'));
     console.log('Database terkoneksi, aplikasi dapat menggunakan');
+    // updateHotel({
+    //   hotelId: 1,
+    //   namaHotel: "Nama Hotel update",
+    //   deskripsi: "Deskripsi Hotel update",
+    //   gambar: "https://via.placeholder.com/300.png",
+    //   googleMap: "googleMap update"
+    // })
+    // deleteHotelById(1)
     // Routes
     // try {
-    createTableBukuTamu()
-    createTableAdmin()
-    createTableWisata()
-    createTableKategori()
-    createTableHotel()
+    await createTableBukuTamu()
+    await createTableAdmin()
+    await createTableKategori()
+    await createTableWisata()
+    await createTableHotel()
+    // await addAdmin({
+    //   username: "iche",
+    //   password: "iche cantik"
+    // })
     //   addBukuTamu('rendy@gmail.com', 'mantap')
     //   const data = await getAllBukuTamu()
     //   console.log('data', data)

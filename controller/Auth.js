@@ -29,9 +29,11 @@ const handleAdminLoginSubmit = async (req, res, next) => {
 
 async function handleAdminLogout(req, res, next) {
   try {
-    req.logout();
-    req.flash('success_msg', 'Anda Berhasil Keluar');
-    res.redirect('/login');
+    req.logout(function (err) {
+      if (err) { return next(err); }
+      return res.redirect('/');
+    });
+
   } catch (err) {
     console.log('err')
     next(err)

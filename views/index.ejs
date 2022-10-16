@@ -35,8 +35,14 @@
           "
         >
           <h6 class="text-center">Search</h6>
-          <form class="d-flex input-group" role="search">
+          <form
+            class="d-flex input-group"
+            role="search"
+            action="/search"
+            method="POST"
+          >
             <input
+              name="search"
               class="form-control"
               type="search"
               placeholder="cari..."
@@ -124,6 +130,17 @@
         </div>
       </div>
       <div style="width: 50%">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d503249.5676969392!2d120.22073504403666!3d-9.796729190218574!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1spariwisata%20sumba%20timur!5e0!3m2!1sen!2sid!4v1664768351659!5m2!1sen!2sid"
+          width="600"
+          height="450"
+          style="border: 0"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+
+        <!-- 
         <section
           id="image-carousel"
           class="splide"
@@ -157,7 +174,7 @@
               </li>
             </ul>
           </div>
-        </section>
+        </section> -->
       </div>
     </div>
   </div>

@@ -1,7 +1,100 @@
 <% layout('layouts/boilerplate-dashboard') -%>
 <div style="margin-top: 30px">
   <h1 class="h2">Hotel</h1>
+  <div class="mt-4" style="width: 100%; overflow-x: scroll">
+    <h4 class="h4">List Data Hotel</h4>
+    <table id="tableData" class="display" style="width: 100%">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Aksi</th>
+          <th>Nama Hotel</th>
+          <th>Deskripsi</th>
+          <th>Lokasi Map</th>
+          <th>Gambar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%dataHotel.forEach((hotel, index) => { %>
+        <tr>
+          <td><%= index+1 %></td>
+          <td>
+            <dix class="d-flex align-items-center gap-2">
+              <a href="/dashboard/hotel/update/<%= hotel.id_hotel %>">
+                <button type="button" class="btn btn-warning">Ubah</button>
+              </a>
+              <button
+                data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop<%= hotel.id_hotel %>"
+                type="button"
+                class="btn btn-danger"
+              >
+                Hapus
+              </button>
+            </dix>
+          </td>
+          <td><%= hotel.nama_hotel %></td>
+          <td><%= hotel.deskripsi %></td>
+          <td><%= hotel.google_map %></td>
+          <td>
+            <div class="d-flex align-items-center">
+              <% for (var j = 0; j < hotel.gambar.length; j++) {%>
+              <img
+                class="mx-4"
+                src="<%=hotel.gambar[j]%>"
+                width="150"
+                height="150"
+              />
+              <% } %>
+            </div>
+          </td>
+        </tr>
+        <div
+          class="modal fade"
+          id="staticBackdrop<%= hotel.id_hotel %>"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabindex="-1"
+          aria-labelledby="staticBackdropLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                  Hapus Wisata
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <h6>Apakah anda yakin ingin menghapus data hotel ?</h6>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-success"
+                  data-bs-dismiss="modal"
+                >
+                  Batal
+                </button>
+                <a href="/dashboard/hotel/delete/<%= hotel.id_hotel %>">
+                  <button type="button" class="btn btn-danger">Hapus</button>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
   <div style="margin-top: 30px">
+    <h4 class="h4">Tambah Data Hotel</h4>
     <form
       action="/hotel/add"
       method="post"
@@ -19,16 +112,7 @@
         />
         <label for="floatingInput">Nama Hotal</label>
       </div>
-      <div class="form-floating">
-        <textarea
-          style="height: 200px"
-          name="deskripsi"
-          class="form-control"
-          placeholder="Deskripsi tentang hotel"
-          id="floatingTextarea"
-        ></textarea>
-        <label for="floatingTextarea">Deskripsi Hotel</label>
-      </div>
+
       <div class="mb-3">
         <label for="formFileMultiple" class="form-label">Gambar Hotel</label>
         <input
@@ -40,53 +124,29 @@
           accept="image/*"
         />
       </div>
-      <div class="form-floating">
-        <textarea
-          style="height: 250px"
-          name="lokasiMap"
-          class="form-control"
-          placeholder="Deskripsi tentang wisata"
-          id="floatingTextarea"
-        ></textarea>
-        <label for="floatingTextarea">Lokasi Google Map</label>
+      <div class="d-flex gap-2 align-items-flex-start">
+        <div class="form-floating" style="width: 100%">
+          <textarea
+            style="height: 200px"
+            name="deskripsi"
+            class="form-control"
+            placeholder="Deskripsi tentang hotel"
+            id="floatingTextarea"
+          ></textarea>
+          <label for="floatingTextarea">Deskripsi Hotel</label>
+        </div>
+        <div class="form-floating" style="width: 100%">
+          <textarea
+            style="height: 100px"
+            name="lokasiMap"
+            class="form-control"
+            placeholder="Deskripsi tentang hotel"
+            id="floatingTextarea"
+          ></textarea>
+          <label for="floatingTextarea">Lokasi Google Map</label>
+        </div>
       </div>
       <button class="btn btn-lg btn-primary" type="submit">Tambah Hotel</button>
     </form>
-  </div>
-
-  <div class="mt-4" style="width: 100%; overflow-x: scroll">
-    <table id="tableData" class="display" style="width: 100%">
-      <thead>
-        <tr>
-          <th>No</th>
-          <th>Nama Hotel</th>
-          <th>Deskripsi</th>
-          <th>Lokasi Map</th>
-          <th>Gambar</th>
-        </tr>
-      </thead>
-      <tbody>
-        <%dataHotel.forEach((hotel, index) => { %>
-        <tr>
-          <td><%= index+1 %></td>
-          <td><%= hotel.nama_hotel %></td>
-          <td><%= hotel.deskripsi %></td>
-          <td><%= hotel.google_map %></td>
-          <td>
-            <div class="d-flex align-items-center">
-              <% for (var j = 0; j < hotel.gambar.length; j++) {%>
-              <img
-                class="mx-4"
-                src="<%=hotel.gambar[j]%>"
-                width="150"
-                height="150"
-              />
-              <% } %>
-            </div>
-          </td>
-        </tr>
-        <% }) %>
-      </tbody>
-    </table>
   </div>
 </div>
